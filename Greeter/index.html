@@ -1,8 +1,19 @@
 <html>
+    <meta charset="UTF8"> 
     <head>
-        
+       <title>Greetr example</title> 
     </head>
     <body>
+        <div id="logindiv">
+            <select id="lang">
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="pl">Polish</option>
+            </select>
+            <span>Formal </span><input type="checkbox" id="formal" checked="true"></input>
+            <input type="button" value="Login" id="login" />
+        </div>
+        <h1 id="greeting"></h1>
         <script src="jquery-1.11.2.js"></script>
         <script src="Greetr.js"></script>
         <script src="app.js"></script>
