@@ -23,8 +23,7 @@ const unpackString = (expression) => {
   let arr = [...expression];
   let multiObjList = [];
   arr.forEach(x => {
-    if(x === "[") {
-    }
+    console.log(parseInt(x));
   })
   console.log(multiObjList);
 };
