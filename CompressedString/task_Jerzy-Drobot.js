@@ -21,12 +21,31 @@ Wywołanie z "fg2[eset]3[hi]", zwraca " fgesetesethihihi"
 
 const unpackString = (expression) => {
   let arr = [...expression];
-  let multiObjList = [];
-  arr.forEach(x => {
-    console.log(parseInt(x));
-  })
+  let indexList = [];
+  let multiObjList = {};
+  arr.forEach((x, i) => {
+    if (!!parseInt(x)) {
+     console.log(arr.indexOf(x));
+      multiObjList[`expression${i}`] = x;
+     indexList.push(arr.indexOf(x))
+     console.log(arr.indexOf("]", arr.indexOf(x)));
+     indexList.push(arr.indexOf("]", arr.indexOf(x)))
+    }
+    else {
+      multiObjList[`expression${i}`] = x;
+    }
+  });
+  console.log(indexList);
+  for(let i = 0; i < indexList.length / 2; i++ ) {
+  multiObjList.push();
+  }
   console.log(multiObjList);
-};
+
+}
+
+sliceMultiObj = () => {
+  arr.slice(indexList[i]+2, indexList[i+1])
+}
 
 const case1 = "2[a]3[bc]";
 const case2 = "3[d2[e]]";
