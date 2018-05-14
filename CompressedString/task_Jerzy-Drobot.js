@@ -20,31 +20,30 @@ Wywołanie z "fg2[eset]3[hi]", zwraca " fgesetesethihihi"
 */
 
 const unpackString = (expression) => {
-  let arr = [...expression];
-  let indexList = [];
-  let multiObjList = {};
+  const arr = [...expression];
+  const indexList = [];
+  const multiObjList = {};
+  let multiIndex = 0;
   arr.forEach((x, i) => {
     if (!!parseInt(x)) {
-     console.log(arr.indexOf(x));
-      multiObjList[`expression${i}`] = x;
-     indexList.push(arr.indexOf(x))
-     console.log(arr.indexOf("]", arr.indexOf(x)));
-     indexList.push(arr.indexOf("]", arr.indexOf(x)))
+      indexList.push(arr.indexOf(x));
+      indexList.push(arr.indexOf("]", arr.indexOf(x)));
+      multiObjList[`expression${multiIndex}`] =  this.sliceMultiObj(arr);
+      //arr.slice(this.indexList[multiIndex] + 2, this.indexList[multiIndex + 1])
+      multiIndex ++
     }
     else {
-      multiObjList[`expression${i}`] = x;
+      //multiObjList[`expression${i}`] = x;
     }
   });
   console.log(indexList);
-  for(let i = 0; i < indexList.length / 2; i++ ) {
-  multiObjList.push();
-  }
   console.log(multiObjList);
 
 }
 
-sliceMultiObj = () => {
-  arr.slice(indexList[i]+2, indexList[i+1])
+sliceMultiObj = (arr) => {
+ arr.slice(2, 3)
+ // arr.slice(this.indexList[index] + 2, this.indexList[index + 1])
 }
 
 const case1 = "2[a]3[bc]";
