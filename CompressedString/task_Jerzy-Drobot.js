@@ -19,17 +19,17 @@ Wywołanie z "fg2[eset]3[hi]", zwraca " fgesetesethihihi"
 
 */
 
+const multiObjList = [];
+
 const unpackString = (expression) => {
   const arr = [...expression];
-  const indexList = [];
-  const multiObjList = {};
+  let indexList = [];
+ 
   let multiIndex = 0;
   arr.forEach((x, i) => {
     if (!!parseInt(x)) {
-      indexList.push(arr.indexOf(x));
-      indexList.push(arr.indexOf("]", arr.indexOf(x)));
-      multiObjList[`expression${multiIndex}`] =  this.sliceMultiObj(arr);
-      //arr.slice(this.indexList[multiIndex] + 2, this.indexList[multiIndex + 1])
+      indexList.push({start: arr.indexOf(x), end: arr.indexOf("]", arr.indexOf(x))});
+      multiObjList.push({expression: this.sliceMultiObj(arr, multiIndex, indexList), multipier: x})
       multiIndex ++
     }
     else {
@@ -41,13 +41,13 @@ const unpackString = (expression) => {
 
 }
 
-sliceMultiObj = (arr) => {
- arr.slice(2, 3)
- // arr.slice(this.indexList[index] + 2, this.indexList[index + 1])
+sliceMultiObj = (arr, index, indexList) => {
+ let sliced = arr.slice(indexList[index].start + 2, indexList[index].end);
+ return "".concat(...sliced);
 }
 
 const case1 = "2[a]3[bc]";
 const case2 = "3[d2[e]]";
 const case3 = "fg2[eset]3[hi]";
 
-unpackString(case1);
+unpackString(case3);
