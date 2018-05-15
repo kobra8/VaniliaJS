@@ -29,32 +29,24 @@ const unpackString = (expression) => {
 
   let multiIndex = 0;
   arr.forEach((x, i) => {
-    if (!!parseInt(x)) {
-      indexList.push({ start: arr.indexOf(x), end: arr.indexOf("]", arr.indexOf(x)) });
-      multiObjList.push({ expression: this.sliceMultiObj(arr, multiIndex, indexList), multipier: x })
-      multiIndex++
+    if (arr.indexOf("[") !== -1) {
+      indexList.push({ start: arr.indexOf("[", i + 1) });
     }
-    else {
-      singleObj.push(x);
-     
-    }
-    if (i === arr.indexOf("[") -1 ) {
-      singleObjList.push("".concat(...singleObj));
+    else if (arr.indexOf("]") !== -1) {
+      indexList.push({ end: arr.indexOf("]", i + 1) });
     }
   });
 
+  indexList.forEach(x => {
+    singleObjList.push("".concat(...singleObj));
+  })
+
   console.log(indexList);
-  console.log(multiObjList);
-  console.log(singleObj);
-  console.log(singleObjList);
+
 
 }
 
-sliceMultiObj = (arr, multiIndex, indexList) => {
-  let sliced = arr.slice(indexList[multiIndex].start + 2, indexList[multiIndex].end);
-  return "".concat(...sliced);
-}
-sliceSingleObj = (arr, index, indexList) => {
+sliceMultiObj = (arr, index, indexList) => {
   let sliced = arr.slice(indexList[index].start + 2, indexList[index].end);
   return "".concat(...sliced);
 }
@@ -64,4 +56,4 @@ const case2 = "3[d2[e]]";
 const case3 = "fg2[eset]3[hi]";
 const case4 = "fg2[eset]3[hi]zumba";
 
-unpackString(case4);
+unpackString(case1);
