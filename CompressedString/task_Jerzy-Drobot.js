@@ -20,6 +20,7 @@ Wywołanie z "fg2[eset]3[hi]", zwraca " fgesetesethihihi"
 */
 
 const multiObjList = [];
+const singleObjList = []
 
 const unpackString = (expression) => {
   const arr = [...expression];
@@ -32,12 +33,13 @@ const unpackString = (expression) => {
       multiObjList.push({expression: this.sliceMultiObj(arr, multiIndex, indexList), multipier: x})
       multiIndex ++
     }
-    else {
-      //multiObjList[`expression${i}`] = x;
+    else if (indexList.length === 0){
+      singleObjList.push(x);
     }
   });
   console.log(indexList);
   console.log(multiObjList);
+  console.log(singleObjList);
 
 }
 
