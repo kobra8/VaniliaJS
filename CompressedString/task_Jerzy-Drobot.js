@@ -19,48 +19,64 @@ Wywołanie z "fg2[eset]3[hi]", zwraca " fgesetesethihihi"
 
 */
 
-const multiObjList = [];
-const singleObjList = [];
-
-
+//Main fuction 
 const unpackString = (expression) => {
-  const arr = [...expression];
-  let indexList = [];
+  const charList = [...expression];
+  let concatenatedString = ""
+  let collection = this.iterateExpression(charList);
+  let collectionFiltered = collection.filter(x => x !== "[" && x !== "]");
+  let result = concatenatedString.concat(...collectionFiltered);
+  console.log(result);
+}
 
+
+//This function iterate over collection of chars and push to result array
+iterateExpression = (charList) => {
+  let collection = [];
+  let indexList = [];
+  let multiObjList = [];
   let multiIndex = 0;
-  let singleObj = ""
-  arr.forEach((x, i) => {
+
+  //If char = number use fuction sliceMultiObject to slice chars between [] and push to array
+  charList.forEach(x => {
     if (!!parseInt(x)) {
-      indexList.push({ start: arr.indexOf(x), end: arr.indexOf("]", arr.indexOf(x)) });
-      multiObjList.push({ expression: this.sliceMultiObj(arr, multiIndex, indexList), multipier: x })
-      singleObjList.push(singleObj);
-      multiIndex++
+      indexList.push({ start: charList.indexOf(x), end: charList.indexOf("]", charList.indexOf(x)) });
+      //This loop push sliced chars multiply time if i < number - 1. -1 because 1 push was made from else instructions char by char
+      for (let i = 0; i < x - 1; i++) {
+        collection.push(this.sliceMultiObj(charList, multiIndex, indexList));
+      }
+      multiIndex++;
     }
     else {
-      singleObj = singleObj + x;
+      collection.push(x);
     }
- 
+
   });
-
-  console.log(indexList);
-  console.log(multiObjList);
-  console.log(singleObj);
-  console.log(singleObjList);
-
+  return collection
 }
 
+//This function sliced chars between [] and return concatenated
 sliceMultiObj = (arr, multiIndex, indexList) => {
   let sliced = arr.slice(indexList[multiIndex].start + 2, indexList[multiIndex].end);
+
+  //If sliced array inculdes char "[" make iteration for inside multi object
+  if (~sliced.indexOf("[")) {
+    let insideCollection = this.iterateExpression(sliced);
+    // Replace "[" char last char from sliced array
+    let indexToSplice = insideCollection.indexOf("[");
+    if( ~indexToSplice ) {
+      insideCollection[indexToSplice] =  sliced[sliced.length - 1];
+    }
+    return "".concat(...insideCollection);
+  }
   return "".concat(...sliced);
 }
-sliceSingleObj = (arr, index, indexList) => {
-  let sliced = arr.slice(indexList[index].start + 2, indexList[index].end);
-  return "".concat(...sliced);
-}
+
+//Cases to check
 
 const case1 = "2[a]3[bc]";
 const case2 = "3[d2[e]]";
 const case3 = "fg2[eset]3[hi]";
-const case4 = "fg2[eset]3[hi]zumba";
 
-unpackString(case4);
+// Main function call
+unpackString(case2);

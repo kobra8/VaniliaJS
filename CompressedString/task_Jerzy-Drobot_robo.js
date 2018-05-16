@@ -19,48 +19,48 @@ Wywołanie z "fg2[eset]3[hi]", zwraca " fgesetesethihihi"
 
 */
 
+const multiObjList = [];
+const singleObjList = [];
+
+
 const unpackString = (expression) => {
-  const charList = [...expression];
-  let collection = [];
+  const arr = [...expression];
   let indexList = [];
-  let multiObjList = [];
 
   let multiIndex = 0;
-  let concatenatedString = ""
-  charList.forEach(x => {
+  let singleObj = ""
+  arr.forEach((x, i) => {
     if (!!parseInt(x)) {
-      indexList.push({ start: charList.indexOf(x), end: charList.indexOf("]", charList.indexOf(x)) });
-      for(let i = 0; i < x - 1; i++) {
-      collection.push(this.sliceMultiObj(charList, multiIndex, indexList));
-      }
-      multiIndex++;
-   
+      indexList.push({ start: arr.indexOf(x), end: arr.indexOf("]", arr.indexOf(x)) });
+      multiObjList.push({ expression: this.sliceMultiObj(arr, multiIndex, indexList), multipier: x })
+      singleObjList.push(singleObj);
+      multiIndex++
     }
     else {
-      collection.push(x);
+      singleObj = singleObj + x;
     }
  
   });
-  console.log(collection);
-  let collectionFiltered = collection.filter(x => x !== "[" && x !== "]");
-  let result = concatenatedString.concat(...collectionFiltered);
+
   console.log(indexList);
-  console.log(result);
+  console.log(multiObjList);
+  console.log(singleObj);
+  console.log(singleObjList);
 
 }
 
 sliceMultiObj = (arr, multiIndex, indexList) => {
   let sliced = arr.slice(indexList[multiIndex].start + 2, indexList[multiIndex].end);
-  if(sliced.includes("[")) {
-   sliceMultiObj(sliced,1,)
-  }
   return "".concat(...sliced);
 }
-
+sliceSingleObj = (arr, index, indexList) => {
+  let sliced = arr.slice(indexList[index].start + 2, indexList[index].end);
+  return "".concat(...sliced);
+}
 
 const case1 = "2[a]3[bc]";
 const case2 = "3[d2[e]]";
 const case3 = "fg2[eset]3[hi]";
+const case4 = "fg2[eset]3[hi]zumba";
 
-console.log("deedeedee")
-unpackString(case2);
+unpackString(case4);
